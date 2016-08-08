@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.diarioListBox = new System.Windows.Forms.ListBox();
             this.diarioContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.borrarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxBuscar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.definicionRichTextBox = new System.Windows.Forms.RichTextBox();
             this.conceptoLabel = new System.Windows.Forms.Label();
-            this.borrarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.diarioContextMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -72,12 +73,20 @@
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
             this.editarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editarToolStripMenuItem.Text = "Nuevo";
+            this.editarToolStripMenuItem.Click += new System.EventHandler(this.editarToolStripMenuItem_Click);
             // 
             // borrarToolStripMenuItem
             // 
             this.borrarToolStripMenuItem.Name = "borrarToolStripMenuItem";
             this.borrarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.borrarToolStripMenuItem.Text = "Editar";
+            // 
+            // borrarToolStripMenuItem1
+            // 
+            this.borrarToolStripMenuItem1.Name = "borrarToolStripMenuItem1";
+            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.borrarToolStripMenuItem1.Text = "Borrar";
+            this.borrarToolStripMenuItem1.Click += new System.EventHandler(this.borrarToolStripMenuItem1_Click);
             // 
             // textBoxBuscar
             // 
@@ -139,24 +148,19 @@
             this.conceptoLabel.TabIndex = 2;
             this.conceptoLabel.Text = "...";
             // 
-            // borrarToolStripMenuItem1
-            // 
-            this.borrarToolStripMenuItem1.Name = "borrarToolStripMenuItem1";
-            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.borrarToolStripMenuItem1.Text = "Borrar";
-            this.borrarToolStripMenuItem1.Click += new System.EventHandler(this.borrarToolStripMenuItem1_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(452, 329);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Opacity = 0.97D;
+            this.Opacity = 0.94D;
             this.Text = "Diario de conceptos - POI";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.diarioContextMenu.ResumeLayout(false);

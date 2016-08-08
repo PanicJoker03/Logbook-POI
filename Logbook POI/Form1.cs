@@ -117,6 +117,11 @@ namespace Logbook_POI
                 definicionRichTextBox.Text = "";
             }
         }
+        private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConceptoForm conceptoForm = new ConceptoForm();
+            conceptoForm.Show();
+        }
         //custom functions
         private void buscarConcepto()
         {
