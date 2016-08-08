@@ -55,6 +55,7 @@
             this.diarioListBox.Sorted = true;
             this.diarioListBox.TabIndex = 0;
             this.diarioListBox.SelectedIndexChanged += new System.EventHandler(this.diarioListBox_SelectedIndexChanged);
+            this.diarioListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.diarioListBox_KeyDown);
             this.diarioListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.diarioListBox_MouseDown);
             this.diarioListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.diarioListBox_MouseUp);
             // 
@@ -65,26 +66,27 @@
             this.borrarToolStripMenuItem,
             this.borrarToolStripMenuItem1});
             this.diarioContextMenu.Name = "diarioContextMenu";
-            this.diarioContextMenu.Size = new System.Drawing.Size(153, 92);
+            this.diarioContextMenu.Size = new System.Drawing.Size(110, 70);
             this.diarioContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // editarToolStripMenuItem
             // 
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
-            this.editarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editarToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.editarToolStripMenuItem.Text = "Nuevo";
             this.editarToolStripMenuItem.Click += new System.EventHandler(this.editarToolStripMenuItem_Click);
             // 
             // borrarToolStripMenuItem
             // 
             this.borrarToolStripMenuItem.Name = "borrarToolStripMenuItem";
-            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.borrarToolStripMenuItem.Text = "Editar";
+            this.borrarToolStripMenuItem.Click += new System.EventHandler(this.borrarToolStripMenuItem_Click);
             // 
             // borrarToolStripMenuItem1
             // 
             this.borrarToolStripMenuItem1.Name = "borrarToolStripMenuItem1";
-            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(109, 22);
             this.borrarToolStripMenuItem1.Text = "Borrar";
             this.borrarToolStripMenuItem1.Click += new System.EventHandler(this.borrarToolStripMenuItem1_Click);
             // 
@@ -173,8 +175,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox diarioListBox;
         private System.Windows.Forms.TextBox textBoxBuscar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -184,6 +184,7 @@
         private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borrarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borrarToolStripMenuItem1;
+        private System.Windows.Forms.ListBox diarioListBox;
     }
 }
 

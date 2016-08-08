@@ -26,8 +26,6 @@ namespace Logbook_POI
             textBoxBuscar.Text = "Buscar...";
             textBoxBuscar.AutoCompleteSource = AutoCompleteSource.CustomSource;
             textBoxBuscar.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            diarioListBox.DisplayMember = "nombre";
-            diarioListBox.ValueMember = "id";
             refreshListBox();
         }
 
@@ -52,37 +50,9 @@ namespace Logbook_POI
             HideCaret(definicionRichTextBox.Handle);
         }
 
-        private void refreshListBox()
+        public void diarioListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //conceptoList.Clear();
-            diarioListBox.Items.Clear();
-            foreach (var concepto in Diario.Lista)
-            {
-                diarioListBox.Items.Add(concepto);
-                //conceptoList.Add(concepto);
-            }
-            //diarioListBox.DataSource = conceptoList;
-            //textbox autocomplete list
-            var conceptoNombres = new AutoCompleteStringCollection();
-            foreach(var concepto in Diario.Lista)
-            {
-                conceptoNombres.Add(concepto.nombre);
-            }
-            textBoxBuscar.AutoCompleteCustomSource = conceptoNombres;
-        }
-
-        private void diarioListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (diarioListBox.SelectedItem != null)
-            {
-                conceptoLabel.Text = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
-                definicionRichTextBox.Text = (diarioListBox.SelectedItem as Diario.Concepto).definicion;
-            }
-            else
-            {
-                conceptoLabel.Text = "...";
-                definicionRichTextBox.Text = "";
-            }
+            muestraConcepto();
         }
         
         private void diarioListBox_MouseDown(object sender, MouseEventArgs e)
@@ -119,10 +89,59 @@ namespace Logbook_POI
         }
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConceptoForm conceptoForm = new ConceptoForm();
-            conceptoForm.Show();
+            ConceptoForm conceptoForm = new ConceptoForm(this);
+            conceptoForm.ShowDialog();
+        }
+
+        private void borrarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConceptoForm conceptoForm = new ConceptoForm(this, diarioListBox.SelectedItem as Diario.Concepto);
+            conceptoForm.ShowDialog();
+        }
+
+        private void diarioListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                borrarToolStripMenuItem_Click(null, null);
+            }
         }
         //custom functions
+        public void refreshListBox()
+        {
+            diarioListBox.DataSource = null;
+            diarioListBox.DataSource = Diario.Lista;
+            diarioListBox.DisplayMember = "nombre";
+            diarioListBox.ValueMember = "id";
+            //diarioListBox.Items.Clear();
+            //foreach (var concepto in Diario.Lista)
+            //{
+            //    diarioListBox.Items.Add(concepto);
+            //}
+
+            //textbox autocomplete list
+            var conceptoNombres = new AutoCompleteStringCollection();
+            foreach (var concepto in Diario.Lista)
+            {
+                conceptoNombres.Add(concepto.nombre);
+            }
+            textBoxBuscar.AutoCompleteCustomSource = conceptoNombres;
+        }
+
+        private void muestraConcepto()
+        {
+            if (diarioListBox.SelectedItem != null)
+            {
+                conceptoLabel.Text = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
+                definicionRichTextBox.Text = (diarioListBox.SelectedItem as Diario.Concepto).definicion;
+            }
+            else
+            {
+                conceptoLabel.Text = "...";
+                definicionRichTextBox.Text = "";
+            }
+        }
+
         private void buscarConcepto()
         {
             string itemString = this.textBoxBuscar.Text;
