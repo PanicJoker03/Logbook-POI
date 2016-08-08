@@ -14,18 +14,26 @@ namespace Logbook_POI
     public partial class Form1 : Form
     {
         [DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
+        private static extern bool HideCaret(IntPtr hWnd);
+        //private List<Diario.Concepto> conceptoList = new List<Diario.Concepto>();
+        //Variables auxiliares
+        private bool canClearTextBoxBuscar = true;
+
         public Form1()
         {
             InitializeComponent();
             textBoxBuscar.ForeColor = Color.Gray;
             textBoxBuscar.Text = "Buscar...";
+            textBoxBuscar.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            textBoxBuscar.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            diarioListBox.DisplayMember = "nombre";
+            diarioListBox.ValueMember = "id";
             refreshListBox();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            
+            buscarConcepto();
         }
 
         private void textBoxBuscar_Enter(object sender, EventArgs e)
@@ -37,31 +45,89 @@ namespace Logbook_POI
                 canClearTextBoxBuscar = false;
             }
         }
-        //Variables auxiliares
-        private bool canClearTextBoxBuscar = true;
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void definicionRichTextBox_SelectionChanged(object sender, EventArgs e)
         {
             definicionRichTextBox.SelectionLength = 0;
             HideCaret(definicionRichTextBox.Handle);
         }
+
         private void refreshListBox()
         {
-            DiarioListBox.Items.Clear();
+            //conceptoList.Clear();
+            diarioListBox.Items.Clear();
             foreach (var concepto in Diario.Lista)
             {
-                DiarioListBox.Items.Add(concepto.nombre);
+                diarioListBox.Items.Add(concepto);
+                //conceptoList.Add(concepto);
+            }
+            //diarioListBox.DataSource = conceptoList;
+            //textbox autocomplete list
+            var conceptoNombres = new AutoCompleteStringCollection();
+            foreach(var concepto in Diario.Lista)
+            {
+                conceptoNombres.Add(concepto.nombre);
+            }
+            textBoxBuscar.AutoCompleteCustomSource = conceptoNombres;
+        }
+
+        private void diarioListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (diarioListBox.SelectedItem != null)
+            {
+                conceptoLabel.Text = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
+                definicionRichTextBox.Text = (diarioListBox.SelectedItem as Diario.Concepto).definicion;
+            }
+            else
+            {
+                conceptoLabel.Text = "...";
+                definicionRichTextBox.Text = "";
             }
         }
+        
+        private void diarioListBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            diarioListBox.SelectedIndex = diarioListBox.IndexFromPoint(e.X, e.Y);
+        }
+
+        private void diarioListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (diarioListBox.SelectedItem == null)
+            {
+                diarioContextMenu.Hide();
+            }
+        }
+
+        private void textBoxBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.Enter)
+            {
+                buscarConcepto();
+            }
+        }
+
+        private void borrarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string conceptoString = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
+            if (MessageBox.Show("¿Estas seguro de borrar el concepto " + conceptoString + "?", "Borrar concepto", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Diario.Lista.Remove(diarioListBox.SelectedItem as Diario.Concepto);
+                refreshListBox();
+                conceptoLabel.Text = "...";
+                definicionRichTextBox.Text = "";
+            }
+        }
+        //custom functions
+        private void buscarConcepto()
+        {
+            string itemString = this.textBoxBuscar.Text;
+            diarioListBox.SelectedIndex = diarioListBox.FindString(itemString);
+        }
+        //Unused...
+        private void Form1_Load(object sender, EventArgs e) { }
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e) { }
+        private void textBox1_TextChanged_1(object sender, EventArgs e) { }
+        private void textBoxBuscar_TabStopChanged(object sender, EventArgs e) { }
+        private void textBoxBuscar_TabIndexChanged(object sender, EventArgs e) { }
     }
 }

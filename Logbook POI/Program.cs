@@ -22,9 +22,10 @@ namespace Logbook_POI
         {
             //Tests
             //Diario diario = new Diario();
-            //diario.Lista.Add(new Diario.Concepto("Amor", "El amor es un concepto"));
-            //diario.Lista.Add(new Diario.Concepto("Locura", "La locura es otro concepto"));
-            //diario.Lista.Add(new Diario.Concepto("Hambre", "El hambre te hace querer comer"));
+            //Diario.Lista.Add(new Diario.Concepto("Amor", "El amor es un concepto"));
+            //Diario.Lista.Add(new Diario.Concepto("Locura", "La locura es otro concepto"));
+            //Diario.Lista.Add(new Diario.Concepto("Hambre", "El hambre te hace querer comer"));
+            //Diario.Guardar();
             Diario.Cargar();
 
             Application.EnableVisualStyles();

@@ -12,18 +12,19 @@ namespace Logbook_POI
     /// </summary>
     public static class Diario
     {
+        public static List<Concepto> Lista = new List<Concepto>();
         /// <summary>
         /// La estructura base que define un concepto del diario.
         /// </summary>
         [Serializable]
-        public struct Concepto
+        public class Concepto
         {
             public uint id
             {
                 get { return _id; }
             }
-            public string nombre;
-            public string definicion;
+            public string nombre { get; set; }
+            public string definicion { get; set; }
             public Concepto(string nombre, string definicion)
             {
                 _id = _idCount++;
@@ -33,7 +34,6 @@ namespace Logbook_POI
             private uint _id;
         }
         private static uint _idCount;
-        public static List<Concepto> Lista = new List<Concepto>();
         /// <summary>
         /// Guardar los conceptos en un archivo binario
         /// </summary>
