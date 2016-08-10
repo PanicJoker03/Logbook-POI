@@ -21,16 +21,14 @@ namespace Logbook_POI
         static void Main()
         {
             //Tests
-            //Diario diario = new Diario();
             //Diario.Lista.Add(new Diario.Concepto("Amor", "El amor es un concepto"));
             //Diario.Lista.Add(new Diario.Concepto("Locura", "La locura es otro concepto"));
             //Diario.Lista.Add(new Diario.Concepto("Hambre", "El hambre te hace querer comer"));
             //Diario.Guardar();
-            Diario.Cargar();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            Diario.Guardar();
         }
     }
 }

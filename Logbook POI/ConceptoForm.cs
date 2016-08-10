@@ -31,7 +31,10 @@ namespace Logbook_POI
 
         private void ConceptoForm_Load(object sender, EventArgs e)
         {
-
+            if (editando)
+                this.Text = "Editar concepto";
+            else
+                this.Text = "Nuevo concepto";
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

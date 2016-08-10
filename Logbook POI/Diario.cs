@@ -19,21 +19,14 @@ namespace Logbook_POI
         [Serializable]
         public class Concepto
         {
-            public uint id
-            {
-                get { return _id; }
-            }
             public string nombre { get; set; }
             public string definicion { get; set; }
             public Concepto(string nombre, string definicion)
             {
-                _id = _idCount++;
                 this.nombre = nombre;
                 this.definicion = definicion;
             }
-            private uint _id;
         }
-        private static uint _idCount;
         /// <summary>
         /// Guardar los conceptos en un archivo binario
         /// </summary>
@@ -56,7 +49,6 @@ namespace Logbook_POI
             {
                 var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                 Lista = (List<Concepto>)binaryFormatter.Deserialize(stream);
-                _idCount = Lista.Last<Concepto>().id + 1;
             }
         }
     }

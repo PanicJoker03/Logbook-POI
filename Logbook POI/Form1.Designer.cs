@@ -51,7 +51,7 @@
             this.diarioListBox.FormattingEnabled = true;
             this.diarioListBox.Location = new System.Drawing.Point(6, 48);
             this.diarioListBox.Name = "diarioListBox";
-            this.diarioListBox.Size = new System.Drawing.Size(137, 251);
+            this.diarioListBox.Size = new System.Drawing.Size(137, 368);
             this.diarioListBox.Sorted = true;
             this.diarioListBox.TabIndex = 0;
             this.diarioListBox.SelectedIndexChanged += new System.EventHandler(this.diarioListBox_SelectedIndexChanged);
@@ -108,7 +108,7 @@
             this.groupBox1.Controls.Add(this.diarioListBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(149, 305);
+            this.groupBox1.Size = new System.Drawing.Size(149, 426);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Busqueda";
@@ -119,22 +119,22 @@
             this.groupBox2.Controls.Add(this.conceptoLabel);
             this.groupBox2.Location = new System.Drawing.Point(168, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(277, 305);
+            this.groupBox2.Size = new System.Drawing.Size(370, 426);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Concepto";
+            this.groupBox2.Text = "Definición";
             // 
             // definicionRichTextBox
             // 
-            this.definicionRichTextBox.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.definicionRichTextBox.BackColor = System.Drawing.Color.White;
             this.definicionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.definicionRichTextBox.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.definicionRichTextBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.definicionRichTextBox.Font = new System.Drawing.Font("Segoe UI Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.definicionRichTextBox.Location = new System.Drawing.Point(7, 36);
             this.definicionRichTextBox.Name = "definicionRichTextBox";
             this.definicionRichTextBox.ReadOnly = true;
             this.definicionRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.definicionRichTextBox.Size = new System.Drawing.Size(264, 263);
+            this.definicionRichTextBox.Size = new System.Drawing.Size(357, 380);
             this.definicionRichTextBox.TabIndex = 3;
             this.definicionRichTextBox.TabStop = false;
             this.definicionRichTextBox.Text = "";
@@ -155,7 +155,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(452, 329);
+            this.ClientSize = new System.Drawing.Size(550, 450);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -164,6 +164,7 @@
             this.Name = "Form1";
             this.Opacity = 0.94D;
             this.Text = "Diario de conceptos - POI";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.diarioContextMenu.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

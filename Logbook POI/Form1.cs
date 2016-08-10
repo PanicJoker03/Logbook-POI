@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
 
 namespace Logbook_POI
 {
@@ -15,13 +16,24 @@ namespace Logbook_POI
     {
         [DllImport("user32.dll")]
         private static extern bool HideCaret(IntPtr hWnd);
-        //private List<Diario.Concepto> conceptoList = new List<Diario.Concepto>();
         //Variables auxiliares
         private bool canClearTextBoxBuscar = true;
+        //Code from:
+        //http://www.daveoncsharp.com/2009/09/how-to-paint-a-gradient-background-for-your-forms/
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            var fillRectangle = this.ClientRectangle.Size.IsEmpty ? new Rectangle(1, 1, 1, 1) : this.ClientRectangle;
+            using (LinearGradientBrush brush = new LinearGradientBrush(fillRectangle, Color.White, Color.FromArgb(224, 240, 255), 90F))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+            }
+            //base.OnPaintBackground(e);
+        }
 
         public Form1()
         {
             InitializeComponent();
+            Diario.Cargar();
             textBoxBuscar.ForeColor = Color.Gray;
             textBoxBuscar.Text = "Buscar...";
             textBoxBuscar.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -78,33 +90,34 @@ namespace Logbook_POI
 
         private void borrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string conceptoString = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
-            if (MessageBox.Show("¿Estas seguro de borrar el concepto " + conceptoString + "?", "Borrar concepto", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Diario.Lista.Remove(diarioListBox.SelectedItem as Diario.Concepto);
-                refreshListBox();
-                conceptoLabel.Text = "...";
-                definicionRichTextBox.Text = "";
-            }
+            BorrarConcepto();
         }
+
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConceptoForm conceptoForm = new ConceptoForm(this);
-            conceptoForm.ShowDialog();
+            NuevoConcepto();
         }
 
         private void borrarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConceptoForm conceptoForm = new ConceptoForm(this, diarioListBox.SelectedItem as Diario.Concepto);
-            conceptoForm.ShowDialog();
+            EditConcepto();
         }
 
         private void diarioListBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 borrarToolStripMenuItem_Click(null, null);
             }
+            else if (e.KeyCode == Keys.Delete)
+                BorrarConcepto();
+            else if (e.KeyCode == Keys.N && e.Modifiers == Keys.Control)
+                NuevoConcepto();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Diario.Guardar();
         }
         //custom functions
         public void refreshListBox()
@@ -112,13 +125,6 @@ namespace Logbook_POI
             diarioListBox.DataSource = null;
             diarioListBox.DataSource = Diario.Lista;
             diarioListBox.DisplayMember = "nombre";
-            diarioListBox.ValueMember = "id";
-            //diarioListBox.Items.Clear();
-            //foreach (var concepto in Diario.Lista)
-            //{
-            //    diarioListBox.Items.Add(concepto);
-            //}
-
             //textbox autocomplete list
             var conceptoNombres = new AutoCompleteStringCollection();
             foreach (var concepto in Diario.Lista)
@@ -146,6 +152,30 @@ namespace Logbook_POI
         {
             string itemString = this.textBoxBuscar.Text;
             diarioListBox.SelectedIndex = diarioListBox.FindString(itemString);
+        }
+
+        private void NuevoConcepto()
+        {
+            ConceptoForm conceptoForm = new ConceptoForm(this);
+            conceptoForm.ShowDialog();
+        }
+
+        private void BorrarConcepto()
+        {
+            string conceptoString = (diarioListBox.SelectedItem as Diario.Concepto).nombre;
+            if (MessageBox.Show("¿Estás seguro de borrar el concepto " + conceptoString + "?", "Borrar concepto", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Diario.Lista.Remove(diarioListBox.SelectedItem as Diario.Concepto);
+                refreshListBox();
+                conceptoLabel.Text = "...";
+                definicionRichTextBox.Text = "";
+            }
+        }
+
+        private void EditConcepto()
+        {
+            ConceptoForm conceptoForm = new ConceptoForm(this, diarioListBox.SelectedItem as Diario.Concepto);
+            conceptoForm.ShowDialog();
         }
         //Unused...
         private void Form1_Load(object sender, EventArgs e) { }
